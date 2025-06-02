@@ -189,7 +189,7 @@ def main():
                 conclusion = generate_conclusion(df, num_col, cat_col)
                 st.markdown(conclusion)
                 
-                # Download Charts
+              """  # Download Charts
                 st.header("Download Charts")
                 chart_names = ["Pie Chart", "Histogram", "Bar Chart", "Scatter Plot", "Box Plot", "Q-Q Plot"]
                 for i, (fig, fname) in enumerate(figs):
@@ -197,7 +197,7 @@ def main():
                         continue
                     fig.write_image(fname, width=600, height=400)
                     with open(fname, 'rb') as file:
-                        st.download_button(f"Download {chart_names[i]}", file, file_name=fname, mime="image/png")
+                        st.download_button(f"Download {chart_names[i]}", file, file_name=fname, mime="image/png")"""
 
 if __name__ == "__main__":
     main()
