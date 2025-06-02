@@ -1,6 +1,6 @@
 streamlit
 pandas
-matplotlib
-seaborn
-reportlab
+numpy
 plotly
+scipy
+chardet
