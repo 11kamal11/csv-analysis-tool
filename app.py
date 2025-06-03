@@ -126,8 +126,6 @@ def main():
                     num_col = st.selectbox("Numerical Column", numeric_cols)
                 bins = st.slider("Histogram Bins", 5, 50, 10, step=5)
                 
-                figs = []
-                
                 # Pie Chart
                 st.subheader("Pie Chart")
                 value_counts = df.groupby(cat_col)[num_col].sum().reset_index()
@@ -135,7 +133,6 @@ def main():
                               color_discrete_sequence=px.colors.qualitative.Pastel)
                 fig1.update_layout(template='plotly_white', font=dict(family="Arial", size=12))
                 st.plotly_chart(fig1, use_container_width=True)
-                figs.append((fig1, "pie_chart.png"))
                 
                 # Histogram
                 st.subheader("Histogram")
@@ -143,7 +140,6 @@ def main():
                                    color_discrete_sequence=['teal'])
                 fig2.update_layout(template='plotly_white', font=dict(family="Arial", size=12))
                 st.plotly_chart(fig2, use_container_width=True)
-                figs.append((fig2, "histogram.png"))
                 
                 # Bar Chart
                 st.subheader("Bar Chart")
@@ -151,7 +147,6 @@ def main():
                              color_discrete_sequence=['coral'])
                 fig3.update_layout(template='plotly_white', font=dict(family="Arial", size=12))
                 st.plotly_chart(fig3, use_container_width=True)
-                figs.append((fig3, "bar_chart.png"))
                 
                 # Scatter Plot
                 st.subheader("Scatter Plot")
@@ -161,10 +156,8 @@ def main():
                                      color_discrete_sequence=px.colors.qualitative.Dark2)
                     fig4.update_layout(template='plotly_white', font=dict(family="Arial", size=12))
                     st.plotly_chart(fig4, use_container_width=True)
-                    figs.append((fig4, "scatter_plot.png"))
                 else:
                     st.warning("Scatter plot requires at least two numerical columns.")
-                    figs.append((None, "scatter_plot.png"))
                 
                 # Box Plot
                 st.subheader("Box Plot")
@@ -172,32 +165,19 @@ def main():
                              color_discrete_sequence=['purple'])
                 fig5.update_layout(template='plotly_white', font=dict(family="Arial", size=12))
                 st.plotly_chart(fig5, use_container_width=True)
-                figs.append((fig5, "box_plot.png"))
                 
                 # Q-Q Plot
                 st.subheader("Q-Q Plot")
                 fig6 = create_qq_plot(df, num_col)
                 if fig6:
                     st.plotly_chart(fig6, use_container_width=True)
-                    figs.append((fig6, "qq_plot.png"))
                 else:
                     st.warning(f"No valid data for Q-Q plot of {num_col}.")
-                    figs.append((None, "qq_plot.png"))
                 
                 # Conclusion
                 st.header("Conclusion")
                 conclusion = generate_conclusion(df, num_col, cat_col)
                 st.markdown(conclusion)
-                
-                # Download Charts
-                st.header("Download Charts")
-                chart_names = ["Pie Chart", "Histogram", "Bar Chart", "Scatter Plot", "Box Plot", "Q-Q Plot"]
-                for i, (fig, fname) in enumerate(figs):
-                    if fig is None:
-                        continue
-                    fig.write_image(fname, width=600, height=400)
-                    with open(fname, 'rb') as file:
-                        st.download_button(f"Download {chart_names[i]}", file, file_name=fname, mime="image/png")
 
 if __name__ == "__main__":
     main()
